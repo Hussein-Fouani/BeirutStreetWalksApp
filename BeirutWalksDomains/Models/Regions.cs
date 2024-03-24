@@ -10,6 +10,8 @@ namespace BeirutWalksDomains.Models
         [Required]
         [StringLength(100,ErrorMessage = "Name shouldn't be less than 5",MinimumLength =5)]
         public string Name { get; set; }
+        [DataType(DataType.ImageUrl)]
         public string RegionImageUrl { get; set; }
+      
     }
 }
