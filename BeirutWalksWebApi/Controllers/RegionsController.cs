@@ -64,9 +64,9 @@ namespace BeirutWalksWebApi.Controllers
                 {
                     regionsList = regionsList.FindAll(r => r.Name.ToLower().Contains(name.ToLower()));
                 }
-                if(!string.IsNullOrEmpty(name))
+                if(!string.IsNullOrEmpty(sortBy))
                 {
-                    regionsList = (List<Regions>)((bool)isAcending ? regionsList.OrderBy(r => r.Name): regionsList.OrderByDescending(i=>i.Name));
+                    regionsList = ((bool)isAcending ? regionsList.OrderBy(r => r.Name): regionsList.OrderByDescending(i=>i.Name)).ToList();
                 }
                 regionsList = regionsList.Skip((pageNb - 1) * pageSize).Take(pageSize).ToList();
                 var regionsDto = mapper.Map<List<RegionsDto>>(regionsList);
@@ -194,7 +194,7 @@ namespace BeirutWalksWebApi.Controllers
                     return BadRequest(new APIResponse
                     {
                         IsSuccess = false,
-                        ErrorMessages = (List<string>)ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)),
+                        ErrorMessages = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)).ToList(),
                         StatusCode = HttpStatusCode.BadRequest
                     });
                 }

@@ -27,7 +27,7 @@ namespace BeirutWalksWebApi.Controllers
             apiResponse= new();
         }
 
-        [HttpGet("{Id:guid}")]
+        [HttpGet("{Id:guid}", Name = "GetWalks")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<APIResponse>> GetWalks([FromRoute]Guid Id)
@@ -70,8 +70,12 @@ namespace BeirutWalksWebApi.Controllers
 
             if (query != null)
             {
-                query.Where(w => w.Name.Contains(name));
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(w => w.Name.Contains(name)).ToList();
+                }
                 apiResponse.IsSuccess=true;
+                apiResponse.Result = query;
                 apiResponse.StatusCode = HttpStatusCode.OK;
                 return Ok(apiResponse);
             }
@@ -158,6 +162,7 @@ namespace BeirutWalksWebApi.Controllers
                 apiResponse.ErrorMessages = new List<string> { " Data Not found" };
                 return BadRequest(apiResponse);
             }
+            mapper.Map(walksDto, walk);
             await walks.UpdateAsync(walk);
 
             apiResponse.IsSuccess = true;
