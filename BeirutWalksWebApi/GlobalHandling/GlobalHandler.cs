@@ -11,7 +11,7 @@ namespace BeirutWalksWebApi.GlobalHandling
         {
             this.next = next;
         }
-        public async Task InvodeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context)
         {
             try
             {
