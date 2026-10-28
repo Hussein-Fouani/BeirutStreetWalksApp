@@ -20,7 +20,7 @@ namespace BeirutWalksUI.Controllers
             try
             {
                 var client = clientFactory.CreateClient();
-                HttpResponseMessage message = await client.GetAsync("https://localhost:7081/api/regions");
+                HttpResponseMessage message = await client.GetAsync("https://localhost:7045/api/regions");
                 message.EnsureSuccessStatusCode();
                 regions.AddRange(await message.Content.ReadFromJsonAsync<IEnumerable<RegionsDto>>());
                 return View(regions);
@@ -28,7 +28,7 @@ namespace BeirutWalksUI.Controllers
             catch (Exception)
             {
 
-                return View();
+                return View(regions);
             }
             
         }
@@ -48,7 +48,7 @@ namespace BeirutWalksUI.Controllers
                     Content = new StringContent(JsonSerializer.Serialize(addRegion), Encoding.UTF8, "application/json"),
                     Headers = { { "Accept", "application/json" } },
                     Method = HttpMethod.Post,
-                    RequestUri = new Uri("https://localhost:7081/api/regions")
+                    RequestUri = new Uri("https://localhost:7045/api/regions")
                 };
                 HttpResponseMessage message = await client.SendAsync(httpmessage);
                 message.EnsureSuccessStatusCode();
@@ -68,7 +68,7 @@ namespace BeirutWalksUI.Controllers
             try
             {
                 var client = clientFactory.CreateClient();
-                HttpResponseMessage message = await client.GetAsync($"https://localhost:7081/api/regions/{id}");
+                HttpResponseMessage message = await client.GetAsync($"https://localhost:7045/api/regions/{id}");
                 message.EnsureSuccessStatusCode();
                 RegionsDto region = await message.Content.ReadFromJsonAsync<RegionsDto>();
                 return View(region);
@@ -79,7 +79,7 @@ namespace BeirutWalksUI.Controllers
                 return View();
             }
         }
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> Edit(RegionsDto dto)
         {
             try
@@ -90,7 +90,7 @@ namespace BeirutWalksUI.Controllers
                     Content = new StringContent(JsonSerializer.Serialize(dto), Encoding.UTF8, "application/json"),
                     Headers = { { "Accept", "application/json" } },
                     Method = HttpMethod.Put,
-                    RequestUri = new Uri($"https://localhost:7081/api/regions/{dto.Id}")
+                    RequestUri = new Uri($"https://localhost:7045/api/regions/{dto.Id}")
                 };
                 HttpResponseMessage message = await client.SendAsync(httpmessage);
 
@@ -103,13 +103,13 @@ namespace BeirutWalksUI.Controllers
                 return View();
             }
         }
-        [HttpDelete]
+        [HttpPost]
         public async Task<IActionResult> Delete(Guid id)
         {
             try
             {
                 var client = clientFactory.CreateClient();
-                HttpResponseMessage message = await client.DeleteAsync($"https://localhost:7081/api/regions/{id}");
+                HttpResponseMessage message = await client.DeleteAsync($"https://localhost:7045/api/regions/{id}");
                 message.EnsureSuccessStatusCode();
                 return RedirectToAction("Index");
             }
