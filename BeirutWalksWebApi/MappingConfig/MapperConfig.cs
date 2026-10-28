@@ -9,6 +9,8 @@ namespace BeirutWalksWebApi.MappingConfig
         public MapperConfig()
         {
             CreateMap<Walks,WalksDto>().ReverseMap();
+            CreateMap<Walks, CreateWalksDto>().ReverseMap();
+            CreateMap<Walks, UpdateWalksDto>().ReverseMap();
             CreateMap<Regions, RegionsDto>().ReverseMap();
             CreateMap<Difficulty, DifficultyDto>().ReverseMap();
             CreateMap<Regions, RegionsCreateDto>().ReverseMap();
