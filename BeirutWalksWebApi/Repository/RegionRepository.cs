@@ -23,7 +23,7 @@ namespace BeirutWalksWebApi.Repository
         }
         public async Task<List<Regions>> GetAllAsync(Expression<Func<Regions, bool>> filter = null)
         {
-            IQueryable<Regions> query = (IQueryable<Regions>)db;
+            IQueryable<Regions> query = dbSet;
             if (filter != null)
             {
                 query = query.Where(filter);
@@ -33,7 +33,7 @@ namespace BeirutWalksWebApi.Repository
 
         public async Task<Regions> GetAsync(Expression<Func<Regions, bool>> filter = null)
         {
-            IQueryable<Regions> query = (IQueryable<Regions>)db;
+            IQueryable<Regions> query = dbSet;
             if (filter != null)
             {
                 query = query.Where(filter);

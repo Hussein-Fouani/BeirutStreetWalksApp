@@ -29,7 +29,7 @@ namespace BeirutWalksWebApi.Repository
             {
                 query = query.Where(filter);
             }
-            return await query.Include("Regions").Include("Difficulty").ToListAsync();
+            return await query.ToListAsync();
         }
 
         public async Task<Walks> GetAsync(Expression<Func<Walks, bool>> filter = null)
@@ -40,7 +40,7 @@ namespace BeirutWalksWebApi.Repository
                 query = query.Where(filter);
             }
 
-            return await query.Include("Regions").Include("Difficulty").FirstOrDefaultAsync();
+            return await query.FirstOrDefaultAsync();
         }
 
     }
